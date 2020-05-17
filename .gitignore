@@ -1,1 +1,5 @@
 /venv/
+src/constellations-parsed/*
+src/imgs/*
+src/stars-rp/stars.json
+src/config.py
