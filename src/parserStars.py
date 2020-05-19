@@ -6,10 +6,13 @@ import json
 def parse():
     stars = {}
 
+    # Creamos un nuevo archivo estructurando la información.
     with open('./src/stars-rp/stars.txt') as fp:
         line = fp.readline()
         while line:
             params = line.strip().split(" ", 6)
+
+            # Obtenemos todos los parametros.
             hdID = params[3]
             hrID = params[5]
             x = float(params[0])
@@ -23,6 +26,7 @@ def parse():
             else:
                 nombres.append("UNNAMED")
 
+            # Guadamos en el diccionario.
             stars[hdID] = {
                 'hrID': hrID,
                 'x': x,
@@ -32,5 +36,6 @@ def parse():
             }
             line = fp.readline()
 
+    # Guardamos el diccionario como .json
     with open("./src/stars-rp/stars.json", "w") as write_file:
         json.dump(stars, write_file)

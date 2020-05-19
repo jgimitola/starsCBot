@@ -5,12 +5,12 @@ import os
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 
-def start(update, context):
+def start(update, context):  # Mensaje de bienvenida al iniciar el bot.
     update.message.reply_text('¡Bienvenido, miremos al infinito y más allá!\nEscoge una opción para continuar.',
                               reply_markup=main_menu_keyboard())
 
 
-def main_menu(update, context):
+def main_menu(update, context):  # Desplegamos botonería del menú.
     query = update.callback_query
     query.answer()
     query.edit_message_text(
@@ -18,7 +18,7 @@ def main_menu(update, context):
         reply_markup=main_menu_keyboard())
 
 
-def constellations_menu(update, context):
+def constellations_menu(update, context):  # Desplegamos menú de constelaciones.
     query = update.callback_query
     query.answer()
     query.edit_message_text(
@@ -26,6 +26,7 @@ def constellations_menu(update, context):
         reply_markup=constellations_menu_keyboard())
 
 
+# Vemos cuál constelación quiere ser vista y devolvemos su imagen.
 def choose_constellation(update, context):
     query = update.callback_query
     chat_id = update.callback_query.message.chat.id
@@ -37,29 +38,31 @@ def choose_constellation(update, context):
         reply_markup=constellations_menu_keyboard())
 
 
-def main_menu_keyboard():
+def main_menu_keyboard():  # Layout del menú principal.
     keyboard = [[InlineKeyboardButton('Ver las estrellas', callback_data='stars')],
                 [InlineKeyboardButton('Ver el cielo completo', callback_data='sky')],
                 [InlineKeyboardButton('Ver constelaciones', callback_data='const')]]
     return InlineKeyboardMarkup(keyboard)
 
 
+# Buscamos todas las constelaciones disponibles y generamos un layout de teclado.
 def constellations_menu_keyboard():
     keyboard = []
     for filename in os.listdir('./src/constellations-parsed'):
-        name = filename.split('.json')[0]
-        keyboard.append([InlineKeyboardButton(name, callback_data=name)])
+        if not filename.__contains__('.gitkeep'):
+            name = filename.split('.json')[0]
+            keyboard.append([InlineKeyboardButton(name, callback_data=name)])
     keyboard.append([InlineKeyboardButton('Volver', callback_data='main')])
     return InlineKeyboardMarkup(keyboard)
 
 
-def send_stars(update, context):
+def send_stars(update, context):  # Enviamos imagen de todas las estrellas.
     chat_id = update.callback_query.message.chat.id
     img = open('./src/imgs/sky.jpg', 'rb')
     context.bot.send_photo(chat_id, photo=img)
 
 
-def send_fullsky(update, context):
+def send_fullsky(update, context):  # Enviamos imagen de todas las constelaciones.
     chat_id = update.callback_query.message.chat.id
     img = open('./src/imgs/full-sky.jpg', 'rb')
     context.bot.send_photo(chat_id, photo=img)

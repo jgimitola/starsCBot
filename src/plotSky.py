@@ -13,6 +13,7 @@ size = 1000
 scale = (size // 2)
 
 
+# Dibuja las estrellas y permite modificacion.
 def drawStars():
     im = Image.new('RGB', (size, size), (0, 0, 0))
     draw = ImageDraw.Draw(im)
@@ -20,7 +21,6 @@ def drawStars():
     for id in stars_dict:
         x = round(scale * (1 + stars_dict[id]['x']))
         y = round(scale * (1 - stars_dict[id]['y']))
-        # print('x: %s y: %s' % (x, y))
         tamaño_base_estrella = round(10.0 / (stars_dict[id]['brillo'] + 2))
 
         draw.rectangle((x - tamaño_base_estrella // 2, y - tamaño_base_estrella // 2, x + tamaño_base_estrella // 2,
@@ -29,11 +29,13 @@ def drawStars():
     return im
 
 
+# Toma el dibujo de las estrellas y lo guarda.
 def plotStars():
     im = drawStars()
     im.save('./src/imgs/sky.jpg')
 
 
+# Dibuja una constelacion en especifica.
 def drawConstellation(constellation_name, image):
     if image is None:
         im = drawStars()
@@ -57,6 +59,7 @@ def drawConstellation(constellation_name, image):
     return im
 
 
+# Toma la constelación y la guarda.
 def plotConstellation(constellation_name, image=None, noSave=False):
     im = drawConstellation(constellation_name, image)
     if not noSave:
@@ -64,15 +67,19 @@ def plotConstellation(constellation_name, image=None, noSave=False):
     return im
 
 
+# Genera todas las constelaciones individualmente.
 def plotConstellations():
     for filename in os.listdir('./src/constellations-parsed'):
-        plotConstellation(filename, None, False)
+        if not filename.__contains__('.gitkeep'):
+            plotConstellation(filename, None, False)
 
 
+# Genera todas las constelaciones de manera única.
 def plotSky():
     image_temp = None
     for filename in os.listdir('./src/constellations-parsed'):
-        image_temp = plotConstellation(filename, image_temp, True)
+        if not filename.__contains__('.gitkeep'):
+            image_temp = plotConstellation(filename, image_temp, True)
     image_temp.save('./src/imgs/full-sky.jpg')
 
 
