@@ -1,5 +1,8 @@
 #!../venv/Scripts/python
 
+# Creado por Jesus Imitola
+# GitHub User: jgimitola
+
 from telegram.ext import CommandHandler, CallbackQueryHandler, Updater
 
 import config

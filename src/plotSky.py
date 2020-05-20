@@ -1,5 +1,8 @@
 # !../venv/Scripts/python
 
+# Creado por Jesus Imitola
+# GitHub User: jgimitola
+
 import json
 import os
 
@@ -54,7 +57,7 @@ def drawConstellation(constellation_name, image):
         y = round(scale * (1 - point1['y']))
         x2 = round(scale * (1 + point2['x']))
         y2 = round(scale * (1 - point2['y']))
-        draw.line((x, y, x2, y2), fill=(255, 106, 0), width=2)
+        draw.line((x, y, x2, y2), fill=(212, 255, 0), width=2)
 
     return im
 

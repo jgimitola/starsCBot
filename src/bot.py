@@ -1,5 +1,8 @@
 # !../venv/Scripts/python
 
+# Creado por Jesus Imitola
+# GitHub User: jgimitola
+
 import os
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
